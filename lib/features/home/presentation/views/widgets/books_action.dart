@@ -1,49 +1,54 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/core/utils/function/launch_url.dart';
 import 'package:myapp/core/widgets/custome_button.dart';
 import 'package:myapp/features/home/data/models/book_model/book_model.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class BooksAction extends StatelessWidget {
   const BooksAction({super.key, required this.bookModel});
-  final BookModel bookModel;
 
+  final BookModel bookModel;
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Row(
         children: [
           const Expanded(
             child: CustomeButton(
+              text: 'Free',
               backgroundColor: Colors.white,
               textColor: Colors.black,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(16),
                 bottomLeft: Radius.circular(16),
               ),
-              text: '19.99€',
             ),
           ),
           Expanded(
             child: CustomeButton(
-              onPressed: () async {
-                Uri uri = Uri.parse(bookModel.volumeInfo.previewLink!);
-                if (!await launchUrl(uri)) {
-                  await launchUrl(uri);
-                }
+              onPressed: () {
+                launchCustomUrl(context, bookModel.volumeInfo.previewLink);
               },
-              text: 'Free Preview',
-              backgroundColor: Color(0xffEF8262),
+              fontSize: 16,
+              text: getText(bookModel),
+              backgroundColor: const Color(0xffEF8262),
               textColor: Colors.white,
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                 topRight: Radius.circular(16),
                 bottomRight: Radius.circular(16),
               ),
-              fontSize: 16,
             ),
           ),
         ],
       ),
     );
+  }
+
+  String getText(BookModel bookModel) {
+    if (bookModel.volumeInfo.previewLink == null) {
+      return 'Not Avaliable';
+    } else {
+      return 'Preview';
+    }
   }
 }

@@ -1,22 +1,24 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:myapp/core/utils/styles.dart';
-import 'package:myapp/features/home/presentation/views/widgets/best_seller_list_view.dart';
 import 'package:myapp/features/search/presentation/views/widgets/custome_search_text_field.dart';
 
-class SearchViewBode extends StatelessWidget {
-  const SearchViewBode({super.key});
+import '../../../../../core/utils/styles.dart';
+
+class SearchViewBody extends StatelessWidget {
+  const SearchViewBody({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: const [
           CustomeSearchTextField(),
           SizedBox(height: 16),
-          Text("Search Result", style: Styles.textStyle18),
-          Expanded(child: SearchResultListView()),
+          Text('Search Result', style: Styles.textStyle18),
           SizedBox(height: 16),
+          Expanded(child: SearchResultListView()),
         ],
       ),
     );
@@ -31,11 +33,11 @@ class SearchResultListView extends StatelessWidget {
     return ListView.builder(
       padding: EdgeInsets.zero,
       itemCount: 10,
-
       itemBuilder: (context, index) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          child: const BookListViewItem(),
+        return const Padding(
+          padding: EdgeInsets.symmetric(vertical: 10),
+          // child: BookListViewItem(),
+          child: Text('data'),
         );
       },
     );

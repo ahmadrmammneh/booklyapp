@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:myapp/core/utils/app_router.dart';
 import 'package:myapp/core/widgets/custome_error_widget.dart';
 import 'package:myapp/core/widgets/custome_loading_indicator.dart';
 import 'package:myapp/features/home/presentation/manager/featured_books_cubit/featured_books_cubit.dart';
-import 'package:myapp/features/home/presentation/views/widgets/custome_book_image.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../../core/utils/app_router.dart';
+import 'custom_book_item.dart';
 
 class FeaturedBooksListView extends StatelessWidget {
-  const FeaturedBooksListView({super.key});
+  const FeaturedBooksListView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,11 +20,11 @@ class FeaturedBooksListView extends StatelessWidget {
             height: MediaQuery.of(context).size.height * .3,
             child: ListView.builder(
               physics: const BouncingScrollPhysics(),
-              scrollDirection: Axis.horizontal,
               itemCount: state.books.length,
-              itemBuilder: (BuildContext context, int index) {
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, index) {
                 return Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: GestureDetector(
                     onTap: () {
                       GoRouter.of(context).push(
@@ -31,7 +32,7 @@ class FeaturedBooksListView extends StatelessWidget {
                         extra: state.books[index],
                       );
                     },
-                    child: CustomeBookImage(
+                    child: CustomBookImage(
                       imageUrl:
                           state.books[index].volumeInfo.imageLinks?.thumbnail ??
                           '',
@@ -44,7 +45,7 @@ class FeaturedBooksListView extends StatelessWidget {
         } else if (state is FeaturedBooksFailure) {
           return CustomeErrorWidget(errMessage: state.errMessage);
         } else {
-          return CustomeLoadingIndicator();
+          return const CustomeLoadingIndicator();
         }
       },
     );
